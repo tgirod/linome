@@ -24,7 +24,6 @@ Implemented:
 
 - `/sys/host s`: set the destination host for OSC messages
 - `/sys/port i`: set the destination port for OSC messages
-
 - `/grid/led/set x y s`
 - `/grid/led/all s`
 
@@ -32,7 +31,6 @@ Launchpad specific:
 
 - `/scene/led/set y s`
 - `/scene/led/all s`
-
 - `/ctrl/led/set x s`
 - `/ctrl/led/all s`
 
