@@ -65,6 +65,10 @@ int lp_grid_led_set(const char *path, const char *types, lo_arg **argv, int argc
 int lp_scene_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
 int lp_ctrl_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
 
+int lp_grid_led_all(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+int lp_scene_led_all(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+int lp_ctrl_led_all(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+
 int lp_sys_host(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
 int lp_sys_port(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
 

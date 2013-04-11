@@ -53,6 +53,10 @@ void lp_initialize()
     lo_server_add_method(osc, "/scene/led/set", "ii", lp_scene_led_set, NULL);
     lo_server_add_method(osc, "/ctrl/led/set", "ii", lp_ctrl_led_set, NULL);
 
+    lo_server_add_method(osc, "/grid/led/all", "i", lp_grid_led_all, NULL);
+    lo_server_add_method(osc, "/scene/led/all", "i", lp_scene_led_all, NULL);
+    lo_server_add_method(osc, "/ctrl/led/all", "i", lp_ctrl_led_all, NULL);
+
     lo_server_add_method(osc, "/sys/host", "s", lp_sys_host, NULL);
     lo_server_add_method(osc, "/sys/port", "i", lp_sys_port, NULL);
 }
@@ -188,6 +192,44 @@ int lp_ctrl_led_set(const char *path, const char *types, lo_arg **argv, int argc
 	} else {
 		lp_set_ctrl(col, red_off, green_off);
 	}
+	return 0;
+}
+
+int lp_grid_led_all(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+{
+	int on = argv[0]->i != 0;
+
+	pthread_mutex_lock(&led_mutex);
+	for (int row=0; row<8; row++) {
+		for (int col=0; col<8; col++) {
+			led[buffer][row][col] = on*(red_full|green_full);
+		}
+	}
+	pthread_mutex_unlock(&led_mutex);
+	return 0;
+}
+
+int lp_scene_led_all(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+{
+	int on = argv[0]->i != 0;
+
+	pthread_mutex_lock(&led_mutex);
+	for (int row=0; row<8; row++) {
+		led[buffer][8][row] = on*(red_full|green_full);
+	}
+	pthread_mutex_unlock(&led_mutex);
+	return 0;
+}
+
+int lp_ctrl_led_all(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+{
+	int on = argv[0]->i != 0;
+
+	pthread_mutex_lock(&led_mutex);
+	for (int col=0; col<8; col++) {
+		led[buffer][9][col] = on*(red_full|green_full);
+	}
+	pthread_mutex_unlock(&led_mutex);
 	return 0;
 }
 
