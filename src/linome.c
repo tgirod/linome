@@ -49,12 +49,12 @@ void lp_initialize()
 		printf("OSC server listening on port %d\n", lo_server_get_port(osc));
 	}
 
-    lo_server_add_method(osc, "/grid/led/set", "iii", lp_grid_handler, NULL);
-    lo_server_add_method(osc, "/scene/led/set", "ii", lp_scene_handler, NULL);
-    lo_server_add_method(osc, "/ctrl/led/set", "ii", lp_ctrl_handler, NULL);
+    lo_server_add_method(osc, "/grid/led/set", "iii", lp_grid_led_set, NULL);
+    lo_server_add_method(osc, "/scene/led/set", "ii", lp_scene_led_set, NULL);
+    lo_server_add_method(osc, "/ctrl/led/set", "ii", lp_ctrl_led_set, NULL);
 
-    lo_server_add_method(osc, "/sys/host", "s", lp_host_handler, NULL);
-    lo_server_add_method(osc, "/sys/port", "i", lp_port_handler, NULL);
+    lo_server_add_method(osc, "/sys/host", "s", lp_sys_host, NULL);
+    lo_server_add_method(osc, "/sys/port", "i", lp_sys_port, NULL);
 }
 
 void lp_terminate()
@@ -154,7 +154,7 @@ void lp_error_handler(int num, const char *msg, const char *path)
     fflush(stdout);
 }
 
-int lp_grid_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+int lp_grid_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
 {
 	int row = argv[0]->i;
 	int col = argv[1]->i;
@@ -167,7 +167,7 @@ int lp_grid_handler(const char *path, const char *types, lo_arg **argv, int argc
 	return 0;
 }
 
-int lp_scene_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+int lp_scene_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
 {
 	int row = argv[0]->i;
 	int color = argv[1]->i;
@@ -179,7 +179,7 @@ int lp_scene_handler(const char *path, const char *types, lo_arg **argv, int arg
 	return 0;
 }
 
-int lp_ctrl_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+int lp_ctrl_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
 {
     int col = argv[0]->i;
     int color = argv[1]->i;
@@ -191,7 +191,7 @@ int lp_ctrl_handler(const char *path, const char *types, lo_arg **argv, int argc
 	return 0;
 }
 
-int lp_host_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+int lp_sys_host(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
 {
 	char *host = &argv[0]->s;
 	const char *port = lo_address_get_port(dest);
@@ -205,7 +205,7 @@ int lp_host_handler(const char *path, const char *types, lo_arg **argv, int argc
 	return 0;
 }
 
-int lp_port_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
+int lp_sys_port(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data)
 {
 	const char *host = lo_address_get_hostname(dest);
 	char *port = malloc(6);

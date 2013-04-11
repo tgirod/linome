@@ -60,12 +60,13 @@ void lp_set_scene(int row, red_t red, green_t green);
 void lp_set_ctrl(int col, red_t red, green_t green);
 
 void lp_error_handler(int num, const char *msg, const char *path);
-int lp_grid_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
-int lp_scene_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
-int lp_ctrl_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
 
-int lp_host_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
-int lp_port_handler(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+int lp_grid_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+int lp_scene_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+int lp_ctrl_led_set(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+
+int lp_sys_host(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
+int lp_sys_port(const char *path, const char *types, lo_arg **argv, int argc, void *data, void *user_data);
 
 // update leds forever
 void *lp_refresh_routine(void *arg);
