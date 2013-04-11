@@ -1,7 +1,7 @@
 This program aims to reproduce the behaviour of monome's serialosc, but with a
 launchpad instead.
 
-My goal is to expose a very monome like OSC API, and extend it with launchpad
+The goal is to expose a very monome like OSC API, and extend it with launchpad
 specific elements : red/green leds with variable intensity, scene and control
 buttons ...
 
@@ -16,4 +16,23 @@ update the 80 RG leds of the launchpad in one batch, doing it with 81 bytes
 instead of 240. The second allows us to send our 81 bytes of LED data, then
 update the 80 LEDs all at once.
 
+# OSC API
 
+The reference implementation: http://monome.org/docs/tech:osc
+
+Implemented:
+
+- `/grid/led x y s`
+- `/scene/led x s`: launchpad specific, for scene pads
+- `/ctrl/led y s`: launchpad specific, for control pads
+- `/sys/host s`: set the destination host for OSC messages
+- `/sys/port i`: set the destination port for OSC messages
+
+
+# Troubleshooting
+
+- unless you have set the permissions properly, this program needs to run as
+  root in order to access the launchpad in rw mode.
+- when the launchpad is connected, alsa automatically claims the device,
+  preventing linome to claim it. Right now, the only solution I found to this
+  problem is to run `modprobe -r snd-usb-audio` to kick alsa out of the way.
