@@ -22,16 +22,16 @@
 
 typedef enum red {
 	red_off		= 0x00,
-    red_low		= 0x01,
-    red_medium	= 0x02,
-    red_full	= 0x03 
+	red_low		= 0x01,
+	red_medium	= 0x02,
+	red_full	= 0x03 
 } red_t;
 
 typedef enum green {
 	green_off		= 0x00,
-    green_low		= 0x10,
-    green_medium	= 0x20,
-    green_full		= 0x30 
+	green_low		= 0x10,
+	green_medium	= 0x20,
+	green_full		= 0x30 
 } green_t;
 
 unsigned char led[2][10][8] = {0}; 	// leds state : two buffers of 10 lines of 8 leds
