@@ -16,6 +16,12 @@ update the 80 RG leds of the launchpad in one batch, doing it with 81 bytes
 instead of 240. The second allows us to send our 81 bytes of LED data, then
 update the 80 LEDs all at once.
 
+After a bit of testing, it looks like linome gives you a steady 11hz refresh
+rate of the complete launchpad. Because of the use of fast update + double
+buffering, it also means that LED flashes shorter than 0.08 second might not be
+displayed at all: the LED status is changed and reverted in linome before it
+gets to send it to the launchpad in a fast update.
+
 # OSC API
 
 The reference implementation: http://monome.org/docs/tech:osc
@@ -41,3 +47,9 @@ Launchpad specific:
 - when the launchpad is connected, alsa automatically claims the device,
   preventing linome to claim it. Right now, the only solution I found to this
   problem is to run `modprobe -r snd-usb-audio` to kick alsa out of the way.
+
+# TODO
+
+- extend the API to handle RG LEDs
+- using fast LED update only when it is necessary ? It might improve
+  performance.
